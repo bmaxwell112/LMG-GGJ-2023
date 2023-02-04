@@ -7,7 +7,7 @@ public class Root : MonoBehaviour
 
     [SerializeField] private float treeLength;
     [SerializeField] private RootNode node;
-    [SerializeField] private static RootNode activeNode;
+    [SerializeField] public static RootNode activeNode = null;
     [SerializeField] private CamControls camControls;
     // Start is called before the first frame update
     void Start()
@@ -16,26 +16,22 @@ public class Root : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void ClickToAddNode()
     {
         if(Input.GetMouseButtonDown(0)){
             Vector3 pos = camControls.CalculateWorldPointOfMouseClick();
-            print("Mouse Pressed at " + pos);
 
-            AddNode(pos, activeNode.GetFamily());
+            AddNode(pos);
         }
     }
 
-    public void AddNode(Vector3 position, List<RootNode> family = null){
+    public void AddNode(Vector3 position){
         RootNode newNode = Instantiate(node, position, Quaternion.identity);
-        if(family != null){
-            newNode.Initialize(activeNode.GetGeneration(), family);
+        if(activeNode != null){
+            newNode.Initialize(activeNode.GetGeneration(), activeNode);
         } else {
+            print("Initial");
             newNode.Initialize(0);
         }
-    }
-    
-    public static void SetActiveNode(RootNode n){
-        activeNode = n;
     }
 }
