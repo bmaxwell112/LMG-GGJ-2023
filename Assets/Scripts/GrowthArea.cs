@@ -20,6 +20,6 @@ public class GrowthArea : MonoBehaviour
     private void OnMouseDown() {
         print("Adding Node");
         root.ClickToAddNode();
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 }

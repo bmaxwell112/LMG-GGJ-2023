@@ -6,12 +6,15 @@ using System.Linq;
 public class RootNode : MonoBehaviour
 {    
     [SerializeField] private int generation;
-    [SerializeField] private float nodeFacing;
     [SerializeField] private SpriteRenderer nodeSprite;
+    [SerializeField] private GameObject nodeClick;
     private List<Vector3> family = new List<Vector3>();
     private LineRenderer lineRenderer;
     private float rotation;
 
+    /* ----------------------------------------------------------------
+    Startup and update
+    -----------------------------------------------------------------*/
     public void Initialize(int lastGen, RootNode activeRoot = null){
 
         if(activeRoot != null){
@@ -29,10 +32,30 @@ public class RootNode : MonoBehaviour
         //     family.Add(this.transform.parent.transform.position);
         // }       
         DrawLine(GetAllParents());
-        Root.activeNode = this;
-        ChangeColor(Color.red)        ;
     }
 
+    /* ----------------------------------------------------------------
+    PUBLIC FUNCTION CAN BE CALLED FROM OTHER SCRIPTS
+    Returns the latest generation. Not currently used for anything
+    -----------------------------------------------------------------*/
+    public int GetGeneration(){
+        return generation;
+    }
+
+    /* ----------------------------------------------------------------
+    PUBLIC FUNCTION CAN BE CALLED FROM OTHER SCRIPTS
+    Change all changeable parameters of a node. As the node must be
+    accessible to use this function for unneeded changes pass through
+    node.associatedValue.
+    -----------------------------------------------------------------*/
+    public void ChangeNode(Color color, bool isEnabled){
+        nodeSprite.color = color;
+        nodeClick.SetActive(isEnabled);
+    }    
+
+    /* ----------------------------------------------------------------
+    Draws a line based on given list of points. 
+    -----------------------------------------------------------------*/
     void DrawLine(List<Vector3> points){
         if(this.transform.parent){
             Destroy(this.transform.parent.GetComponent<LineRenderer>());
@@ -49,11 +72,11 @@ public class RootNode : MonoBehaviour
             lineRenderer.SetPositions(lineToDraw.ToArray());
         }
     }
-    
-    public int GetGeneration(){
-        return generation;
-    }
 
+    /* ----------------------------------------------------------------
+    This will loop through each gameOjects adding it to a lits until an
+    gameObject does not contain a parent thenreturns the list. 
+    -----------------------------------------------------------------*/
     private List<Vector3> GetAllParents(){
         List<Vector3> parents = new List<Vector3>();
         GameObject currentObj = this.gameObject;
@@ -70,6 +93,10 @@ public class RootNode : MonoBehaviour
         return parents;     
     }
 
+    /* ----------------------------------------------------------------
+    Using the current point and parent this determines the direction
+    the GrowthField will face
+    -----------------------------------------------------------------*/
     private void RotateGrowthField(){        
         if(transform.parent){
             Vector3 diff = transform.parent.transform.position - transform.position;
@@ -77,9 +104,5 @@ public class RootNode : MonoBehaviour
             float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
         }
-    }
-
-    public void ChangeColor(Color color){
-        nodeSprite.color = color;
     }
 }

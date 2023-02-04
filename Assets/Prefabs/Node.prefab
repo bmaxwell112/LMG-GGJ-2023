@@ -129,8 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generation: 0
-  nodeFacing: 0
   nodeSprite: {fileID: 680735944373466299}
+  nodeClick: {fileID: 3372119206634954766}
 --- !u!120 &-5975624924073549276
 LineRenderer:
   m_ObjectHideFlags: 0

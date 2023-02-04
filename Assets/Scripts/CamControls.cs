@@ -13,11 +13,6 @@ public class CamControls : MonoBehaviour
         cameraDepth = myCamera.transform.position.z;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     /*==========================================================
 	Formula Functions
 	The below function are used to check for things such as 
@@ -33,5 +28,9 @@ public class CamControls : MonoBehaviour
         Vector2 worldPos = myCamera.ScreenToWorldPoint(weirdTriplet);
 
         return worldPos;
+    }
+
+    public void WidenField(){
+
     }
 }

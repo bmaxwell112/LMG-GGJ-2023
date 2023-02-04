@@ -18,6 +18,7 @@ public class NodeCollider : MonoBehaviour
 
     private void MakeActiveNode()
     {
-        Root.activeNode = node;
+        Root.ChangeActiveNode(node);
+        // Root.activeNode = node;
     }
 }
