@@ -8,9 +8,11 @@ public class RootNode : MonoBehaviour
     [SerializeField] private int generation;
     [SerializeField] private SpriteRenderer nodeSprite;
     [SerializeField] private GameObject nodeClick;
+    [SerializeField] private Texture[] textures;
+    [SerializeField] private RootNodeAttributes nodeAttributes;
     private List<Vector3> family = new List<Vector3>();
     private LineRenderer lineRenderer;
-    private float rotation;
+    private float rotation;    
 
     /* ----------------------------------------------------------------
     Startup and update
@@ -26,12 +28,14 @@ public class RootNode : MonoBehaviour
 
         family.Add(this.transform.position);
         this.name = "Node" + generation;
-        // print(this.name);
-        // if(this.transform.parent != null){
-        //     print(this.transform.parent.name);
-        //     family.Add(this.transform.parent.transform.position);
-        // }       
-        DrawLine(GetAllParents());
+        List<Vector3> nodes = new List<Vector3>();
+        nodes.Add(this.transform.position);
+        if(this.transform.parent != null){
+            nodes.Add(transform.parent.position);
+            float dist = Vector2.Distance(transform.position, transform.parent.position);
+            nodeAttributes.DetermineNutrientValue(dist);
+        }
+        DrawLine(nodes);        
     }
 
     /* ----------------------------------------------------------------
@@ -51,25 +55,23 @@ public class RootNode : MonoBehaviour
     public void ChangeNode(Color color, bool isEnabled){
         nodeSprite.color = color;
         nodeClick.SetActive(isEnabled);
+        nodeClick.GetComponent<GrowthArea>().IsEnabled();
     }    
 
     /* ----------------------------------------------------------------
     Draws a line based on given list of points. 
     -----------------------------------------------------------------*/
     void DrawLine(List<Vector3> points){
-        if(this.transform.parent){
-            Destroy(this.transform.parent.GetComponent<LineRenderer>());
-        }
-        // Vector3[] curve = Curver.MakeSmoothCurve(points.ToArray(), 10.0f);
-        // List<Vector3> curveToDraw = new List<Vector3>();                
-        // foreach(Vector3 c in curve){
-        //     curveToDraw.Add(c);
-        // }        
-        List<Vector3> lineToDraw = points;
-        if(lineToDraw.Count() > 1){
+        // if(this.transform.parent){
+        //     Destroy(this.transform.parent.GetComponent<LineRenderer>());
+        // }
+        print(points.Count());
+        if(points.Count() > 1){
             lineRenderer = GetComponent<LineRenderer>();
-            lineRenderer.positionCount = lineToDraw.Count();
-            lineRenderer.SetPositions(lineToDraw.ToArray());
+            int rand = Random.Range(0, textures.Length-1);
+            lineRenderer.material.SetTexture("_MainTex", textures[rand]);
+            lineRenderer.positionCount = points.Count();
+            lineRenderer.SetPositions(points.ToArray());
         }
     }
 
@@ -104,5 +106,9 @@ public class RootNode : MonoBehaviour
             float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
         }
+    }
+
+    public RootNodeAttributes GetAttributes(){
+        return nodeAttributes;
     }
 }

@@ -9,6 +9,7 @@ public class GrowthArea : MonoBehaviour
     void Start()
     {
         root = FindObjectOfType<Root>();
+        IsEnabled();
     }
 
     // Update is called once per frame
@@ -17,8 +18,11 @@ public class GrowthArea : MonoBehaviour
         
     }
 
-    private void OnMouseDown() {
-        print("Adding Node");
+    public void IsEnabled(){        
+        transform.localScale = new Vector3(TreeAttributes.growthScale.x, TreeAttributes.growthScale.y, 1);
+    }
+
+    private void OnMouseDown() {        
         root.ClickToAddNode();
         this.gameObject.SetActive(false);
     }

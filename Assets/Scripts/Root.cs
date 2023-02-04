@@ -9,6 +9,7 @@ public class Root : MonoBehaviour
     [SerializeField] private RootNode node;
     [SerializeField] private static RootNode activeNode = null;
     [SerializeField] private CamControls camControls;
+    [SerializeField] private float GrowthRate = 1;
     /* ----------------------------------------------------------------
     Start is called before the first frame update.
     This creates the first node for the tree
@@ -16,6 +17,21 @@ public class Root : MonoBehaviour
     void Start()
     {
         AddNode(Vector3.zero);
+    }
+
+    private void Update() {
+        string s = "Tree Level: " + TreeAttributes.treeLevel + "\n" +
+                   "Total Nutrients: " + TreeAttributes.nutrients + "\n" +
+                   "Total Growth: " + TreeAttributes.growth + "\n";
+        print(s);
+    }
+
+    private IEnumerator GrowthCheck(){
+        while(true){
+            TreeAttributes.GrowthIncrement();
+            yield return new WaitForSeconds(GrowthRate);
+        }
+
     }
 
     /* ----------------------------------------------------------------
@@ -27,6 +43,7 @@ public class Root : MonoBehaviour
         if(Input.GetMouseButtonDown(0)){
             Vector3 pos = camControls.CalculateWorldPointOfMouseClick();
             AddNode(pos);
+            TreeAttributes.GrowthIncrement();
         }
     }
 
@@ -43,6 +60,7 @@ public class Root : MonoBehaviour
             newNode.Initialize(0);
         }
         ChangeActiveNode(newNode);
+        camControls.WidenField(newNode);
     }
 
     /* ----------------------------------------------------------------

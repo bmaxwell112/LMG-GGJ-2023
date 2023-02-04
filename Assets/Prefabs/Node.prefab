@@ -68,8 +68,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -44552975
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -92,6 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 656880766388955594}
   - component: {fileID: 8880666454239938609}
+  - component: {fileID: 7090009965257546438}
   - component: {fileID: -5975624924073549276}
   m_Layer: 0
   m_Name: Node
@@ -131,6 +132,23 @@ MonoBehaviour:
   generation: 0
   nodeSprite: {fileID: 680735944373466299}
   nodeClick: {fileID: 3372119206634954766}
+  textures:
+  - {fileID: 2800000, guid: 01ad7bc499df39d44ab4701ded32fc85, type: 3}
+  - {fileID: 2800000, guid: 9fac63d9d10d87844bee2f376d64dc97, type: 3}
+  - {fileID: 2800000, guid: fcdcc24805667b74183128c079a49813, type: 3}
+  - {fileID: 2800000, guid: 546de12d4b415d149b6789214e63ef06, type: 3}
+--- !u!114 &7090009965257546438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488833153437123419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3facf5cf3936c940967c1ee4b669a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!120 &-5975624924073549276
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -150,7 +168,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: a12862c591b2a754eacdf556e92b8f95, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -168,8 +186,8 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2010287311
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -182,7 +200,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.06593323
+        value: 0.27550697
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -224,7 +242,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -445,3 +463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7274f4afee1f04e850d0e90c0780cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: ef60607d5d659b04589f776f310e3419, type: 3}
+  - {fileID: 21300000, guid: ef60607d5d659b04589f776f310e3419, type: 3}

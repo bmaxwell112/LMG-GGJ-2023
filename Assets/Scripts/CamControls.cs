@@ -6,11 +6,17 @@ public class CamControls : MonoBehaviour
 {
     Camera myCamera;
     float cameraDepth;
+    [SerializeField] float insetPercent = 0;
+    [SerializeField] float camMoveTime = 0.5f;
+    Vector2[] edgePoints = new Vector2[4];   
+    bool expanding = false; 
+
     // Start is called before the first frame update
     void Start()
     {
         myCamera = GetComponent<Camera>();
         cameraDepth = myCamera.transform.position.z;
+        SetCameraBoundries();
     }
 
     /*==========================================================
@@ -29,8 +35,48 @@ public class CamControls : MonoBehaviour
 
         return worldPos;
     }
+    public void SetCameraBoundries(){
 
-    public void WidenField(){
+        // Making camera bounds
+        var leftBottom = (Vector2) myCamera.ScreenToWorldPoint(new Vector3(0, 0, myCamera.nearClipPlane));
+        leftBottom = new Vector2(leftBottom.x - (leftBottom.x * insetPercent), leftBottom.y - (leftBottom.y * insetPercent));        
 
+        var leftTop = (Vector2) myCamera.ScreenToWorldPoint(new Vector3(0, myCamera.pixelHeight, myCamera.nearClipPlane));
+        leftTop = new Vector2(leftTop.x - (leftTop.x * insetPercent), leftTop.y - (leftTop.y * insetPercent));
+
+        var rightTop = (Vector2) myCamera.ScreenToWorldPoint(new Vector3(myCamera.pixelWidth, myCamera.pixelHeight, myCamera.nearClipPlane));
+        rightTop = new Vector2(rightTop.x - (rightTop.x * insetPercent), rightTop.y - (rightTop.y * insetPercent));
+        
+        var rightBottom = (Vector2) myCamera.ScreenToWorldPoint(new Vector3(myCamera.pixelWidth, 0, myCamera.nearClipPlane));        
+        rightBottom = new Vector2(rightBottom.x - (rightBottom.x * insetPercent), rightBottom.y - (rightBottom.y * insetPercent));
+
+        edgePoints = new [] {leftBottom, leftTop, rightTop, rightBottom };
+    }
+
+    public void WidenField(RootNode node){
+        if(
+            (node.transform.position.x < edgePoints[1].x ||
+            node.transform.position.x > edgePoints[3].x ||
+            node.transform.position.y > edgePoints[1].y ||
+            node.transform.position.y < edgePoints[3].y) &&
+            !expanding
+        ){            
+            StartCoroutine(resizeRoutine(myCamera.orthographicSize, myCamera.orthographicSize + 1, camMoveTime));
+        }
+    }
+
+    private IEnumerator resizeRoutine(float oldSize, float newSize, float time)
+    {
+        expanding = true;
+        float elapsed = 0;
+        while (elapsed <= time)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / time);
+               myCamera.orthographicSize = Mathf.Lerp(oldSize, newSize, t);
+            yield return null;
+        }
+        SetCameraBoundries();
+        expanding = false;
     }
 }
