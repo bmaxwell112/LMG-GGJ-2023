@@ -14,7 +14,6 @@ public class TreeAttributes : MonoBehaviour
     
     private static RootNodeAttributes[] allNodes = new RootNodeAttributes[]{};
     private static Vector2 growthScaleThreshold = new Vector2(0.25f, 0.01f);
-    private static int growthThreshold = 100;
 
     public static void GrowthIncrement(){
         allNodes = FindObjectsOfType<RootNodeAttributes>();
@@ -41,5 +40,15 @@ public class TreeAttributes : MonoBehaviour
                 break;
         }
         return drain;
+    }
+
+    public static void NewGame(){
+        treeLevel = 0;
+        nutrients = 0;
+        storedNutrients = 200;
+        growthScale = new Vector2(0.25f, 0.25f);
+    
+        allNodes = new RootNodeAttributes[]{};
+        growthScaleThreshold = new Vector2(0.25f, 0.01f);
     }
 }

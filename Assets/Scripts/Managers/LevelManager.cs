@@ -50,4 +50,9 @@ public class LevelManager : MonoBehaviour {
 	{
 		Application.OpenURL(url);
 	}
+
+	public static void NEWGAME(){
+		TreeAttributes.NewGame();
+		SceneManager.LoadScene ("b00-Game");
+	}
 }

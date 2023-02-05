@@ -498,7 +498,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Paige and Kambria
+  m_Text: 'Paige & Kambria
 
     Present'
 --- !u!222 &712705335
@@ -733,7 +733,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7726596612625904431, guid: 75ab3669fef9b6f42b04d93dfd3a7428, type: 3}
       propertyPath: autoLoadNextLevelAfter
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75ab3669fef9b6f42b04d93dfd3a7428, type: 3}
