@@ -9,10 +9,12 @@ public class RootNode : MonoBehaviour
     [SerializeField] private SpriteRenderer nodeSprite;
     [SerializeField] private GameObject nodeClick;
     [SerializeField] private Texture[] textures;
+    [SerializeField] int textureVal = -1;
     [SerializeField] private RootNodeAttributes nodeAttributes;
     private List<Vector3> family = new List<Vector3>();
     private LineRenderer lineRenderer;
     private float rotation;    
+    private List<Vector3> linePoints = new List<Vector3>();    
 
     /* ----------------------------------------------------------------
     Startup and update
@@ -28,14 +30,18 @@ public class RootNode : MonoBehaviour
 
         family.Add(this.transform.position);
         this.name = "Node" + generation;
-        List<Vector3> nodes = new List<Vector3>();
-        nodes.Add(this.transform.position);
+        
+        linePoints.Add(this.transform.position);
         if(this.transform.parent != null){
-            nodes.Add(transform.parent.position);
-            float dist = Vector2.Distance(transform.position, transform.parent.position);
+            linePoints.Add(transform.parent.position);
+            float dist = GetNodeDistance();
             nodeAttributes.DetermineNutrientValue(dist);
-        }
-        DrawLine(nodes);        
+        } else{
+            nodeAttributes.thickness = 2;
+        }        
+        float width = (nodeAttributes.thickness / 8f);
+        print(width);
+        DrawLine(width);
     }
 
     /* ----------------------------------------------------------------
@@ -54,24 +60,24 @@ public class RootNode : MonoBehaviour
     -----------------------------------------------------------------*/
     public void ChangeNode(Color color, bool isEnabled){
         nodeSprite.color = color;
-        nodeClick.SetActive(isEnabled);
+        nodeClick.SetActive((isEnabled));
         nodeClick.GetComponent<GrowthArea>().IsEnabled();
     }    
 
     /* ----------------------------------------------------------------
     Draws a line based on given list of points. 
     -----------------------------------------------------------------*/
-    void DrawLine(List<Vector3> points){
-        // if(this.transform.parent){
-        //     Destroy(this.transform.parent.GetComponent<LineRenderer>());
-        // }
-        print(points.Count());
-        if(points.Count() > 1){
+    public void DrawLine(float lineWidth){
+        if(linePoints.Count() > 1){
             lineRenderer = GetComponent<LineRenderer>();
-            int rand = Random.Range(0, textures.Length-1);
-            lineRenderer.material.SetTexture("_MainTex", textures[rand]);
-            lineRenderer.positionCount = points.Count();
-            lineRenderer.SetPositions(points.ToArray());
+            if(textureVal < 0){
+                textureVal = Random.Range(0, textures.Length-1);
+            }
+            lineRenderer.material.SetTexture("_MainTex", textures[textureVal]);
+            lineRenderer.startWidth = lineWidth;
+            lineRenderer.endWidth = lineWidth;
+            lineRenderer.positionCount = linePoints.Count();
+            lineRenderer.SetPositions(linePoints.ToArray());
         }
     }
 
@@ -93,7 +99,7 @@ public class RootNode : MonoBehaviour
         }   
 
         return parents;     
-    }
+    }    
 
     /* ----------------------------------------------------------------
     Using the current point and parent this determines the direction
@@ -110,5 +116,9 @@ public class RootNode : MonoBehaviour
 
     public RootNodeAttributes GetAttributes(){
         return nodeAttributes;
+    }
+
+    private float GetNodeDistance(){
+        return Vector2.Distance(transform.position, transform.parent.position);
     }
 }

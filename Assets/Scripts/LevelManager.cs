@@ -29,6 +29,11 @@ public class LevelManager : MonoBehaviour {
 		SceneManager.LoadScene (name);
 	}
 
+	public static void LOADLEVEL(string name){
+		Debug.Log ("New Level load: " + name);
+		SceneManager.LoadScene (name);
+	}
+
 	//  stops the application
 	public void QuitRequest(){
 		Application.Quit ();

@@ -5,21 +5,34 @@ using UnityEngine;
 public class GrowthArea : MonoBehaviour
 {
     Root root;
+    [SerializeField] RootNodeAttributes attributes;
+    [SerializeField] RootNode node;
+    TreeUI treeUI;
+    CamControls camControls;
     // Start is called before the first frame update
     void Start()
     {
+        treeUI = FindObjectOfType<TreeUI>();
         root = FindObjectOfType<Root>();
+        camControls = FindObjectOfType<CamControls>();
         IsEnabled();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void IsEnabled(){        
+        //transform.localScale = new Vector3(TreeAttributes.growthScale.x, TreeAttributes.growthScale.y, 1);
     }
 
-    public void IsEnabled(){        
-        transform.localScale = new Vector3(TreeAttributes.growthScale.x, TreeAttributes.growthScale.y, 1);
+    private void OnMouseOver() {
+        Vector3 pos = camControls.CalculateWorldPointOfMouseClick();
+        float dist = Vector2.Distance(node.transform.position, pos);
+        int cost = attributes.GetBuildCost(dist);
+        string costText = "Extend Vine\nCost: " + cost;
+
+        treeUI.ToggleCostPanel(true, costText);
+
+    }
+    private void OnMouseExit() {
+        treeUI.ToggleCostPanel(false);
     }
 
     private void OnMouseDown() {        

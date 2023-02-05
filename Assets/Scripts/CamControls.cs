@@ -48,7 +48,7 @@ public class CamControls : MonoBehaviour
         rightTop = new Vector2(rightTop.x - (rightTop.x * insetPercent), rightTop.y - (rightTop.y * insetPercent));
         
         var rightBottom = (Vector2) myCamera.ScreenToWorldPoint(new Vector3(myCamera.pixelWidth, 0, myCamera.nearClipPlane));        
-        rightBottom = new Vector2(rightBottom.x - (rightBottom.x * insetPercent), rightBottom.y - (rightBottom.y * insetPercent));
+        rightBottom = new Vector2(rightBottom.x - (rightBottom.x * insetPercent), rightBottom.y - (rightBottom.y * insetPercent) + 1);
 
         edgePoints = new [] {leftBottom, leftTop, rightTop, rightBottom };
     }

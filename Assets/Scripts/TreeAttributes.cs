@@ -11,7 +11,7 @@ public class TreeAttributes : MonoBehaviour
     // Current amount of points gained from all nodes
     public static int nutrients = 0;
     // Used to scale the growth clicking bounding box
-    public static int storedNutrients = 0;
+    public static int storedNutrients = 200;
     public static Vector2 growthScale = new Vector2(0.25f, 0.25f);
     
     private static RootNodeAttributes[] allNodes = new RootNodeAttributes[]{};
