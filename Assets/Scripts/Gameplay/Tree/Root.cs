@@ -49,7 +49,10 @@ public class Root : MonoBehaviour
                 TreeAttributes.treeLevel++;
                 if(TreeAttributes.treeLevel < treeGrowthSprites.Length){
                     sr.sprite = treeGrowthSprites[TreeAttributes.treeLevel];
-                    camControls.WidenField(2);
+                    if(TreeAttributes.treeLevel < 4){
+                        camControls.WidenField(2);
+                    }
+                    
                 } else {
                     LevelManager.LOADLEVEL("b01-Win");
                 }

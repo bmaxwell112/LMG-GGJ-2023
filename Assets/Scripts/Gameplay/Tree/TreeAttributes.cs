@@ -36,6 +36,15 @@ public class TreeAttributes : MonoBehaviour
             case 2:
                 drain = 100;
                 break;
+            case 3:
+                drain = 150;
+                break;
+            case 4:
+                drain = 200;
+                break;
+            case 5:
+                drain = 300;
+                break;
             default:
                 break;
         }

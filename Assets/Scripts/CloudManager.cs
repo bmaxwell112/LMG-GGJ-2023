@@ -26,7 +26,7 @@ public class CloudManager : MonoBehaviour
         while(cloudsOn)
         {
             //RANDOM NUMBERS
-            float startX = -20f;
+            float startX = -30f;
             AddCloud(startX);
             yield return new WaitForSeconds(cloudSpawnRate);
         }
